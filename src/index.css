@@ -16,20 +16,3 @@
     font-family: 'Outfit', system-ui, sans-serif;
   }
 }
-
-/* Custom styles for Ant Design */
-.ant-btn-primary {
-  background-color: #4f46e5;
-}
-
-.ant-btn-primary:hover {
-  background-color: #4338ca !important;
-}
-
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #4f46e5 !important;
-}
-
-.ant-tabs-ink-bar {
-  background: #4f46e5 !important;
-}

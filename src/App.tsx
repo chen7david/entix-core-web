@@ -7,9 +7,16 @@ function App() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#4F46E5',
+          colorPrimary: '#4f46e5',
+          colorPrimaryHover: '#4338ca',
           borderRadius: 8,
           fontFamily: 'Inter, system-ui, sans-serif',
+        },
+        components: {
+          Button: {
+            controlHeight: 48,
+            paddingInline: 32,
+          },
         },
       }}
     >

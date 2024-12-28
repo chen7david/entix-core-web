@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <div className="space-y-20">
+    <div>
       {/* Hero Section */}
-      <div className="relative isolate overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+      <div className="relative isolate overflow-hidden bg-gray-50">
+        <div className="mx-auto max-w-7xl px-6 py-32 sm:py-48 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-400">
               Transform Your Learning Experience with AI
@@ -35,7 +35,7 @@ function HomePage() {
       </div>
 
       {/* Features Section */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base font-semibold leading-7 text-indigo-600 uppercase tracking-wide">
             Smart Learning

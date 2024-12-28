@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
@@ -20,7 +21,9 @@ function App() {
         },
       }}
     >
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ConfigProvider>
   );
 }

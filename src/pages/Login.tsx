@@ -1,18 +1,20 @@
 import { Button, Form, Input, Card, message } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { signIn } = useAuth();
   const from = location.state?.from?.pathname || '/';
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: { email: string; password: string }) => {
     try {
-      // Add your login logic here
+      await signIn(values.email, values.password);
       message.success('Login successful!');
       navigate(from, { replace: true });
     } catch (error) {
-      message.error('Login failed!');
+      message.error(error instanceof Error ? error.message : 'Login failed!');
     }
   };
 
@@ -27,7 +29,10 @@ function LoginPage() {
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: 'Please input your email!' }]}
+            rules={[
+              { required: true, message: 'Please input your email!' },
+              { type: 'email', message: 'Please enter a valid email!' },
+            ]}
           >
             <Input size="large" />
           </Form.Item>

@@ -1,6 +1,6 @@
 import { Button, Form, Input, Card, message } from 'antd';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { confirmResetPassword } from 'aws-amplify/auth';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { confirmResetPassword, resetPassword } from 'aws-amplify/auth';
 
 interface ResetForm {
   code: string;
@@ -12,6 +12,15 @@ function ResetPasswordPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
+
+  const handleResendCode = async () => {
+    try {
+      await resetPassword({ username: email });
+      message.success('New recovery code sent! Please check your email.');
+    } catch (error) {
+      message.error(error instanceof Error ? error.message : 'Failed to send recovery code');
+    }
+  };
 
   const onFinish = async (values: ResetForm) => {
     if (!email) {
@@ -65,13 +74,28 @@ function ResetPasswordPage() {
           </p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item
-            label="Recovery Code"
-            name="code"
-            rules={[{ required: true, message: 'Please input the recovery code!' }]}
-          >
-            <Input size="large" maxLength={6} />
-          </Form.Item>
+          <div className="space-y-1">
+            <Form.Item
+              label="Recovery Code"
+              name="code"
+              rules={[{ required: true, message: 'Please input the recovery code!' }]}
+            >
+              <Input size="large" maxLength={6} />
+            </Form.Item>
+
+            <div className="flex items-center justify-between px-1 mb-6">
+              <span className="text-sm text-gray-500">Didn't receive the code?</span>
+              <Button
+                type="link"
+                onClick={handleResendCode}
+                className="text-sm p-0 h-auto flex items-center"
+              >
+                Resend code
+              </Button>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-200 my-6" />
 
           <Form.Item
             label="New Password"

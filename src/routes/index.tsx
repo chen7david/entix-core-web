@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import RootLayout from '../layouts/RootLayout';
 import NotFoundPage from '../pages/NotFound';
 import HomePage from '../pages/Home';
@@ -7,32 +7,22 @@ import RegisterPage from '../pages/Register';
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import ProfilePage from '../pages/Profile';
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    errorElement: <NotFoundPage />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-      },
-      {
-        path: 'profile',
-        element: (
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-        ),
-      },
-    ],
-  },
-]);
+export function RouterContent() {
+  return (
+    <Routes>
+      <Route path="/" element={<RootLayout />} errorElement={<NotFoundPage />}>
+        <Route index element={<HomePage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route
+          path="profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+    </Routes>
+  );
+}

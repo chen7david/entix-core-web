@@ -1,7 +1,8 @@
 import { ConfigProvider } from 'antd';
-import { RouterProvider } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { router } from './routes';
 import { AuthProvider } from './contexts/AuthContext';
+import { RouterContent } from './routes';
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
       }}
     >
       <AuthProvider>
-        <RouterProvider router={router} />
+        <HashRouter>
+          <RouterContent />
+        </HashRouter>
       </AuthProvider>
     </ConfigProvider>
   );

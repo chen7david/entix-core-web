@@ -8,12 +8,17 @@ function HomePage() {
       <div className="relative isolate overflow-hidden bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 py-32 sm:py-48 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
+            <div className="flex items-center gap-x-4 mb-8">
+              <img src="/src/assets/logo.svg" alt="Entix Logo" className="h-12 w-12" />
+              <span className="text-2xl font-bold text-indigo-600">Entix</span>
+            </div>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-400">
-              Transform Your Learning Experience with AI
+              The Smart Way to Learn and Grow
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 font-light">
-              Entix combines powerful course management with AI-driven analytics to deliver
-              personalized learning experiences that adapt to your needs.
+              Experience the future of education with Entix. Our AI-powered platform combines
+              intelligent course management with advanced analytics to create learning experiences
+              that adapt to you.
             </p>
             <div className="mt-10 flex items-center gap-x-6">
               <Link to="/register">

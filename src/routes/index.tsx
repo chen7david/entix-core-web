@@ -8,6 +8,8 @@ import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import { RedirectAuthenticated } from '../components/auth/RedirectAuthenticated';
 import ProfilePage from '../pages/Profile';
 import VerifyEmailPage from '../pages/VerifyEmail';
+import ForgotPasswordPage from '../pages/ForgotPassword';
+import ResetPasswordPage from '../pages/ResetPassword';
 
 export function RouterContent() {
   return (
@@ -44,6 +46,22 @@ export function RouterContent() {
             <ProtectedRoute>
               <ProfilePage />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="forgot-password"
+          element={
+            <RedirectAuthenticated>
+              <ForgotPasswordPage />
+            </RedirectAuthenticated>
+          }
+        />
+        <Route
+          path="reset-password"
+          element={
+            <RedirectAuthenticated>
+              <ResetPasswordPage />
+            </RedirectAuthenticated>
           }
         />
       </Route>

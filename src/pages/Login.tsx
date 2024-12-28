@@ -53,6 +53,12 @@ function LoginPage() {
         </Form>
 
         <div className="text-center mt-4">
+          <Link to="/forgot-password" className="text-blue-600">
+            Forgot password?
+          </Link>
+        </div>
+
+        <div className="text-center mt-4">
           <p className="text-gray-600">
             Don't have an account?{' '}
             <Link to="/register" className="text-blue-600">

@@ -6,6 +6,7 @@ import LoginPage from '../pages/Login';
 import RegisterPage from '../pages/Register';
 import { ProtectedRoute } from '../components/auth/ProtectedRoute';
 import ProfilePage from '../pages/Profile';
+import VerifyEmailPage from '../pages/VerifyEmail';
 
 export function RouterContent() {
   return (
@@ -14,6 +15,7 @@ export function RouterContent() {
         <Route index element={<HomePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="verify-email" element={<VerifyEmailPage />} />
         <Route
           path="profile"
           element={

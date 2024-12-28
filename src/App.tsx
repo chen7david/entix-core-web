@@ -1,6 +1,5 @@
 import { ConfigProvider } from 'antd';
 import { HashRouter } from 'react-router-dom';
-import { router } from './routes';
 import { AuthProvider } from './contexts/AuthContext';
 import { RouterContent } from './routes';
 

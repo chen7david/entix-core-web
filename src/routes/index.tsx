@@ -1,38 +1,24 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { Login } from '../pages/Login';
+import { ProtectedRoute } from '../components/ProtectedRoute';
 import RootLayout from '../layouts/RootLayout';
-import NotFoundPage from '../pages/NotFound';
-import HomePage from '../pages/Home';
-import LoginPage from '../pages/Login';
-import RegisterPage from '../pages/Register';
-import { ProtectedRoute } from '../components/auth/ProtectedRoute';
-import ProfilePage from '../pages/Profile';
+import Home from '../pages/Home';
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    errorElement: <NotFoundPage />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: 'login',
-        element: <LoginPage />,
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-      },
-      {
-        path: 'profile',
-        element: (
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-        ),
-      },
-    ],
-  },
-]);
+export default function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<RootLayout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        {/* Add other protected routes here */}
+      </Route>
+    </Routes>
+  );
+}

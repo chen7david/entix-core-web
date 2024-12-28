@@ -1,14 +1,17 @@
+import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
+import { Navigation } from '../components/Navigation';
+
+const { Content } = Layout;
 
 function RootLayout() {
   return (
-    <div className="min-h-screen">
-      {/* Add your header, navigation, etc. here */}
-      <main>
+    <Layout className="min-h-screen">
+      <Navigation />
+      <Content>
         <Outlet />
-      </main>
-      {/* Add your footer here */}
-    </div>
+      </Content>
+    </Layout>
   );
 }
 

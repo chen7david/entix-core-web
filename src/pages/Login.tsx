@@ -12,7 +12,7 @@ function LoginPage() {
     try {
       await signIn(values.email, values.password);
       message.success('Login successful!');
-      navigate(from, { replace: true });
+      navigate('/profile');
     } catch (error) {
       message.error(error instanceof Error ? error.message : 'Login failed!');
     }

@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import { Logo } from '../components/common/Logo';
 
 function HomePage() {
   return (
@@ -8,10 +9,7 @@ function HomePage() {
       <div className="relative isolate overflow-hidden bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 py-32 sm:py-48 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
-            <div className="flex items-center gap-x-4 mb-8">
-              <img src="./logo.svg" alt="Entix Logo" className="h-12 w-12" />
-              <span className="text-2xl font-bold text-indigo-600">Entix</span>
-            </div>
+            <Logo size="lg" className="mb-8" />
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-indigo-400">
               The Smart Way to Learn and Grow
             </h1>

@@ -1,6 +1,7 @@
 import { Button, Form, Input, Card, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { AuthHeader } from '../components/auth/AuthHeader';
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 relative">
+      <AuthHeader />
       <Card className="w-full max-w-md shadow-lg">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Create Account</h1>

@@ -2,6 +2,7 @@ import { Button, Layout, Menu } from 'antd';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Logo } from './common/Logo';
 
 const { Header } = Layout;
 
@@ -23,7 +24,7 @@ export function Navigation() {
   return (
     <Header className="bg-white border-b border-gray-200 px-4 flex justify-between items-center">
       <div className="flex items-center">
-        <h1 className="text-xl font-semibold text-gray-800 mr-8">Entix</h1>
+        <Logo />
         <Menu mode="horizontal" className="border-none">
           <Menu.Item key="profile" icon={<UserOutlined />} onClick={() => navigate('/profile')}>
             Profile

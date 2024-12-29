@@ -1,6 +1,7 @@
 import { Button, Form, Input, Card, message } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { confirmResetPassword, resetPassword } from 'aws-amplify/auth';
+import { AuthHeader } from '../components/auth/AuthHeader';
 
 interface ResetForm {
   code: string;
@@ -49,7 +50,8 @@ function ResetPasswordPage() {
 
   if (!email) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 relative">
+        <AuthHeader />
         <Card className="w-full max-w-md shadow-lg">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900">Invalid Access</h1>
@@ -64,7 +66,8 @@ function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 relative">
+      <AuthHeader />
       <Card className="w-full max-w-md shadow-lg">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Reset Your Password</h1>

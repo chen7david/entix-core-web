@@ -1,7 +1,7 @@
 import { Card, Descriptions, Button, Form, Input, message, Tabs, Upload } from 'antd';
 import { useAuth } from '../contexts/AuthContext';
 import { updatePassword } from 'aws-amplify/auth';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import type { UploadChangeParam } from 'antd/es/upload';
@@ -19,6 +19,7 @@ function ProfilePage() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
+  const uploadRef = useRef(null);
 
   const getSignedUrl = async (file: RcFile) => {
     try {
@@ -123,105 +124,126 @@ function ProfilePage() {
     }
   };
 
+  const tabItems = [
+    {
+      key: 'profile',
+      label: 'Profile Information',
+      children: (
+        <Card>
+          <div className="flex flex-col items-center mb-8">
+            <Upload
+              ref={uploadRef}
+              name="avatar"
+              listType="picture-circle"
+              className="avatar-uploader"
+              showUploadList={false}
+              customRequest={customUpload}
+              beforeUpload={beforeUpload}
+              onChange={handleChange}
+              accept="image/*"
+              maxCount={1}
+              progress={{
+                strokeColor: {
+                  '0%': '#108ee9',
+                  '100%': '#87d068',
+                },
+                strokeWidth: 3,
+                format: (percent) => `${parseFloat(percent.toFixed(2))}%`,
+              }}
+            >
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="avatar"
+                  className="w-full h-full rounded-full object-cover"
+                  style={{ width: '100%', height: '100%' }}
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
+                  {loading ? <LoadingOutlined /> : <UserOutlined style={{ fontSize: 32 }} />}
+                </div>
+              )}
+            </Upload>
+            <p className="text-sm text-gray-500 mt-2">Drag an image here or click to upload</p>
+          </div>
+
+          <Descriptions bordered column={1}>
+            <Descriptions.Item label="Email">{user?.username}</Descriptions.Item>
+          </Descriptions>
+        </Card>
+      ),
+    },
+    {
+      key: 'security',
+      label: 'Security',
+      children: (
+        <Card title="Update Password">
+          <Form form={form} layout="vertical" onFinish={handlePasswordUpdate} className="max-w-md">
+            <Form.Item
+              label="Current Password"
+              name="currentPassword"
+              rules={[{ required: true, message: 'Please input your current password!' }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              label="New Password"
+              name="newPassword"
+              rules={[
+                { required: true, message: 'Please input your new password!' },
+                { min: 8, message: 'Password must be at least 8 characters!' },
+                {
+                  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+                  message:
+                    'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character!',
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              label="Confirm New Password"
+              name="confirmPassword"
+              dependencies={['newPassword']}
+              rules={[
+                { required: true, message: 'Please confirm your new password!' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('newPassword') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('The two passwords do not match!'));
+                  },
+                }),
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Update Password
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      ),
+    },
+  ];
+
   return (
     <div className="p-8">
       <div className="max-w-2xl mx-auto">
-        <Tabs defaultActiveKey="profile">
-          <TabPane tab="Profile Information" key="profile">
-            <Card>
-              <div className="flex flex-col items-center mb-8">
-                <Upload
-                  name="avatar"
-                  listType="picture-circle"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  customRequest={customUpload}
-                  beforeUpload={beforeUpload}
-                  onChange={handleChange}
-                  accept="image/*"
-                >
-                  {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="avatar"
-                      className="w-full h-full rounded-full object-cover"
-                      style={{ width: '100%', height: '100%' }}
-                    />
-                  ) : (
-                    <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-                      {loading ? <LoadingOutlined /> : <UserOutlined style={{ fontSize: 32 }} />}
-                    </div>
-                  )}
-                </Upload>
-                <p className="text-sm text-gray-500 mt-2">Drag an image here or click to upload</p>
-              </div>
-
-              <Descriptions bordered column={1}>
-                <Descriptions.Item label="Email">{user?.username}</Descriptions.Item>
-              </Descriptions>
-            </Card>
-          </TabPane>
-
-          <TabPane tab="Security" key="security">
-            <Card title="Update Password">
-              <Form
-                form={form}
-                layout="vertical"
-                onFinish={handlePasswordUpdate}
-                className="max-w-md"
-              >
-                <Form.Item
-                  label="Current Password"
-                  name="currentPassword"
-                  rules={[{ required: true, message: 'Please input your current password!' }]}
-                >
-                  <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                  label="New Password"
-                  name="newPassword"
-                  rules={[
-                    { required: true, message: 'Please input your new password!' },
-                    { min: 8, message: 'Password must be at least 8 characters!' },
-                    {
-                      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                      message:
-                        'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character!',
-                    },
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
-
-                <Form.Item
-                  label="Confirm New Password"
-                  name="confirmPassword"
-                  dependencies={['newPassword']}
-                  rules={[
-                    { required: true, message: 'Please confirm your new password!' },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('newPassword') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error('The two passwords do not match!'));
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Update Password
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
-          </TabPane>
-        </Tabs>
+        <Tabs
+          defaultActiveKey="profile"
+          items={tabItems}
+          type="card"
+          size="large"
+          animated={{ inkBar: true, tabPane: false }}
+          className="profile-tabs"
+        />
       </div>
     </div>
   );

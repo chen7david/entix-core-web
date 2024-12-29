@@ -8,6 +8,7 @@ function LoginPage() {
   const location = useLocation();
   const { signIn } = useAuth();
   const from = location.state?.from?.pathname || '/';
+  const [form] = Form.useForm();
 
   const onFinish = async (values: { email: string; password: string }) => {
     try {
@@ -27,7 +28,7 @@ function LoginPage() {
           <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
           <p className="text-gray-600 font-light mt-2">Sign in to continue learning</p>
         </div>
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form form={form} layout="vertical" onFinish={onFinish} requiredMark="optional">
           <Form.Item
             label="Email"
             name="email"

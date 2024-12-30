@@ -10,7 +10,7 @@ import { ProfilePage } from './pages/Profile';
 export const RouterContent = () => {
   return (
     <Routes>
-      <Route path="/" element={<RootLayout />} errorElement={<NotFoundPage />}>
+      <Route path="/" element={<RootLayout />}>
         <Route index element={<HomePage />} />
         <Route
           path="login"
@@ -28,6 +28,7 @@ export const RouterContent = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
